@@ -1,9 +1,12 @@
 <template>
   <a-card :bordered="false">
-    <a-row :gutter="24">
-     
-      <a-col :span="12">
-         <a-input-search placeholder="input search text"  @search="onSearch"/>
+    <a-row :gutter="24">  
+      <a-col :span="24">
+        <div class='mb-20'>
+          <a-input-search placeholder="input search text" style="width:400px;margin-right:20px;"  @search="onSearch"/>
+          <a-button type="primary" @click="addFirstMeum">新增一级菜单</a-button>
+        </div>
+
         <s-tree
           :dataSource="orgTree"
           :openKeys.sync="openKeys"
@@ -14,7 +17,7 @@
           @dele="handleDele"
           @titleClick="handleTitleClick"></s-tree>
       </a-col>
-      <a-button type="primary" @click="addFirstMeum">新增一级菜单</a-button>
+     
     </a-row>
 
     <org-modal ref="modal" @ok="handleSaveOk" @close="handleSaveClose" />
@@ -92,6 +95,9 @@ export default {
     })
   },
   methods: {
+    onSearch(){
+
+    },
     addFirstMeum(){
       let newMeum = {
         'key': 'key-0100',
@@ -140,6 +146,9 @@ export default {
 </script>
 
 <style lang="less">
+  .mb-20{
+    margin-bottom: 20px;
+  }
   .custom-tree {
 
     /deep/ .ant-menu-item-group-title {
