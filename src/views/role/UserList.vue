@@ -30,7 +30,7 @@
     <s-table size="default" :columns="columns" :data="loadData">
       <div slot="expandedRowRender" slot-scope="record" style="margin: 0">
          <a-table size="mini" :columns="roleColumns" :dataSource="record.rloes">
-           
+            
          </a-table>
       </div>
       <span slot="action" slot-scope="text, record" style="display:inline-block;width:200px;">

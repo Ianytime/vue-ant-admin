@@ -10,6 +10,8 @@
           :search="true"
           @click="handleClick"
           @add="handleAdd"
+          @edit="handleEdit"
+          @dele="handleDele"
           @titleClick="handleTitleClick"></s-tree>
       </a-col>
       <a-button type="primary" @click="addFirstMeum">新增一级菜单</a-button>
@@ -109,6 +111,12 @@ export default {
       console.log('add button, item', item)
       this.$message.info(`提示：你点了 ${item.key} - ${item.title} `)
       this.$refs.modal.add(item.key)
+    },
+    handleEdit(item){
+      console.log('编辑')
+    },
+    handleDele(item){
+      console.log('删除')
     },
     handleTitleClick (item) {
       console.log('handleTitleClick', item)

@@ -8,10 +8,11 @@
                             {{item.title}}
                         </div>
                         <div>
-                            <a-dropdown>
+                            <a-dropdown >
                                 <a class="btn"><a-icon type="ellipsis" /></a>
-                                <a-menu slot="overlay">
+                                <a-menu slot="overlay" @click="handleMenuClick($event,item)">
                                     <a-menu-item key="1">新增</a-menu-item>
+                                    <a-menu-item key="2">编辑</a-menu-item>
                                     <a-menu-item key="3">移除</a-menu-item>
                                 </a-menu>
                             </a-dropdown>
@@ -22,8 +23,6 @@
                         <Tree :dataSource='item.children'></Tree>
                     </div>
                 </div>
-                 
-               
             </div>
         </div>   
 </template>
@@ -51,6 +50,22 @@ export default({
         sMeumClik(item,index){
             item.fold = !item.fold
             this.$set(this.dataSource,index,item)
+        },
+         handleMenuClick(e,item) {
+            let key = e.key
+            switch (key) {
+                case '1':
+                    this.$emit('add',item)
+                    break;
+                case '2':
+                    this.$emit('edit',item)
+                    break;
+                case '3':
+                    this.$emit('dele',item)
+                    break;
+                default:
+                    break;
+            }
         }
     }
 })
