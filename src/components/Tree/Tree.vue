@@ -6,11 +6,12 @@
                         <div>
                             <a-icon  v-if="item.children"  :type="item.fold?'minus-square':'plus-square'"  class="fold-icon"/>
                             <a-icon :type="item.icon" v-if="item.icon"/>
-                            {{item.title}}
+                            {{item.name}}
                         </div>
                          <div>
                             {{item.code||'路径'}}
                         </div>
+                        <!-- <div>{{item.remark}}</div> -->
                         <div>
                             <a-icon type="plus" class="mr-10" @click.stop="add(item)"/>
                             <a-icon type="edit" class="mr-10"  @click.stop="edit(item)"/>

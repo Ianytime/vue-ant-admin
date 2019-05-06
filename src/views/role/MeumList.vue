@@ -28,7 +28,7 @@
 import STree from '@/components/Tree/Tree.vue'
 import { STable } from '@/components'
 import OrgModal from './modules/OrgModal'
-import { getOrgTree, getServiceList } from '@/api/manage'
+import { meumList, getServiceList } from '@/api/manage'
 
 export default {
   name: 'TreeList',
@@ -90,8 +90,12 @@ export default {
     }
   },
   created () {
-    getOrgTree().then(res => {
-      this.orgTree = res.result
+    let params={
+      pageNumber:1,
+      pageSize:10
+    }
+    meumList(params).then(res => {
+      this.orgTree = res.msg.list
     })
   },
   methods: {
@@ -99,12 +103,7 @@ export default {
 
     },
     addFirstMeum(){
-      let newMeum = {
-        'key': 'key-0100',
-        'title': '新菜单',
-        'icon': 'mail'
-      }
-      this.orgTree.push(newMeum)
+      this.$refs.modal.add()
     },
     handleClick (e) {
       console.log('handleClick', e)

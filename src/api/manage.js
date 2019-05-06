@@ -6,7 +6,9 @@ const api = {
   permission: '/permission',
   addPermission:'http://192.169.9.66/auth/right/add',
   permissionNoPager: '/permission/no-pager',
-  orgTree: '/org/tree'
+  orgTree: '/org/tree',
+  addMeum:'http://192.169.9.66/auth/menu/add',
+  meumList:'http://192.169.9.66/auth/menu/page'
 }
 
 export default api
@@ -58,7 +60,23 @@ export function getOrgTree (parameter) {
     params: parameter
   })
 }
+export function addMeum(parameter){
+  console.log(parameter)
+  return axios({
+    url:api.addMeum,
+    method: 'post',
+    data: parameter
+  })
+}
 
+export function meumList(parameter){
+  console.log('meumList')
+  return axios({
+    url:api.meumList,
+    method: 'post',
+    data: parameter
+  })
+}
 // id == 0 add     post
 // id != 0 update  put
 export function saveService (parameter) {

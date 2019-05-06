@@ -19,15 +19,34 @@ const service = axios.create({
   },
   transformRequest: [function (data) {
     // 对 data 进行任意转换处理
+    filterNull (data)
     let formData = new FormData();
     for(let key in data){
+     
       formData.append(key, data[key]);
     }
     data = formData
     return data;
   }],
 })
-
+function toType (obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+function filterNull (o) {
+  for (var key in o) {
+    if (o[key] === null || o[key] === '' || o[key] === 'null'||o[key] === undefined) {
+      delete o[key]
+    }
+    if (toType(o[key]) === 'string') {
+      o[key] = o[key].trim()
+    } else if (toType(o[key]) === 'object') {
+      o[key] = filterNull(o[key])
+    } else if (toType(o[key]) === 'array') {
+      o[key] = filterNull(o[key])
+    }
+  }
+  return o
+}
 const err = (error) => {
   if (error.response) {
     const data = error.response.data

@@ -9,22 +9,24 @@
   >
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-
-        <a-form-item
-          label="父级ID"
-        >
-          <a-input v-decorator="['parentId', {}]" disabled />
+        <a-form-item label="父级ID" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-input v-decorator="['pid', {}]" disabled/>
+        </a-form-item>
+        <a-form-item label="图标路径" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-input v-decorator="['icon', {}]"/>
+        </a-form-item>
+        <a-form-item label="菜单名称" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-input v-decorator="['name', {}]"/>
         </a-form-item>
 
-        <a-form-item
-          label="菜单名称"
-        >
-          <a-input v-decorator="['orgName', {}]" />
+        <a-form-item label="路由路径" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-input v-decorator="['code', {}]"/>
         </a-form-item>
-        <a-form-item
-          label="图标路径"
-        >
-          <a-input v-decorator="['icon', {}]" />
+        <a-form-item label="排序" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-input v-decorator="['sequence', {}]"/>
+        </a-form-item>
+        <a-form-item label="备注" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <a-textarea  v-decorator="['remark', {}]"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -32,9 +34,10 @@
 </template>
 
 <script>
+import { addMeum} from '@/api/manage'
 export default {
   name: 'OrgModal',
-  data () {
+  data() {
     return {
       labelCol: {
         xs: { span: 24 },
@@ -49,57 +52,53 @@ export default {
       mdl: {}
     }
   },
-  beforeCreate () {
+  beforeCreate() {
     this.form = this.$form.createForm(this)
     console.log('form::', this.form)
   },
-  created () {
-
-  },
+  created() {},
   methods: {
-    add (id) {
-      this.edit({ parentId: id })
+    add(id) {
+      this.edit({ pid: id })
+      
     },
-    edit (record) {
+    edit(record) {
       this.mdl = Object.assign({}, record)
       this.visible = true
       this.$nextTick(() => {
         this.form.setFieldsValue({ ...record })
       })
     },
-    close () {
+    close() {
       this.$emit('close')
       this.visible = false
     },
-    handleOk () {
+    handleOk() {
       const _this = this
-      // 触发表单验证
       this.form.validateFields((err, values) => {
-        // 验证表单没错误
         if (!err) {
           console.log('form values', values)
 
           _this.confirmLoading = true
-          // 模拟后端请求 2000 毫秒延迟
-          new Promise((resolve) => {
-            setTimeout(() => resolve(), 2000)
-          }).then(() => {
-            // Do something
-            _this.$message.success('保存成功')
-            _this.$emit('ok')
-          }).catch(() => {
-            // Do something
-          }).finally(() => {
-            _this.confirmLoading = false
-            _this.close()
-          })
+          
+
+          addMeum(values).then(() => {
+              _this.$message.success('保存成功')
+              _this.$emit('ok')
+            })
+            .catch(() => {
+              // Do something
+            })
+            .finally(() => {
+              _this.confirmLoading = false
+              _this.close()
+            })
         }
       })
     },
-    handleCancel () {
+    handleCancel() {
       this.close()
     }
-
   }
 }
 </script>
